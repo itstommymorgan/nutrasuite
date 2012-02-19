@@ -30,7 +30,7 @@ Although there may be some more niceties added in the future, right now
 Nutrasuite is all about contexts. Write your tests like so:
 
     require 'nutrasuite'
-    class EnvelopeTest < MiniTest::unit::TestCase
+    class SomeTest < MiniTest::Unit::TestCase
       a "newly instantiated test object" do
         setup do
           some_setup_stuff
