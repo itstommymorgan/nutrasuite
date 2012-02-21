@@ -1,23 +1,12 @@
 module Nutrasuite
   module ContextHelpers
-    def a(name, &block)
-      name = "a " << name
-      Context.push(name, &block)
-    end
-
-    def an(name, &block)
-      name = "an " << name
-      Context.push(name, &block)
-    end
-
-    def and(name, &block)
-      name = "and " << name
-      Context.push(name, &block)
-    end
-
-    def that(name, &block)
-      name = "that " << name
-      Context.push(name, &block)
+    ["a", "an", "and", "that", "the"].each do |article|
+      eval <<-HERE
+        def #{article}(name, &block)
+          name = "#{article} #{name}"
+          Context.push(name, &block)
+        end
+      HERE
     end
 
     # Code to be run before the context
