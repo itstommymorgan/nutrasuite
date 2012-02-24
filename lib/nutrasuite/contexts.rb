@@ -3,7 +3,7 @@ module Nutrasuite
     ["a", "an", "and", "that", "the"].each do |article|
       eval <<-HERE
         def #{article}(name, &block)
-          name = "#{article} #{name}"
+          name = "#{article} " << name
           Context.push(name, &block)
         end
       HERE
@@ -32,7 +32,12 @@ module Nutrasuite
       build_test(name, &block)
     end
 
-    def build_test(name, &block)
+    # Defines a test based on the given context that will be skipped for now
+    def it_eventually(name, &block)
+      build_test(name, :skip => true, &block)
+    end
+
+    def build_test(name, options = {}, &block)
       test_name = Context.build_test_name(name)
 
       setups = []
@@ -42,10 +47,16 @@ module Nutrasuite
         teardowns.concat(context.teardowns)
       end
 
-      define_method test_name do
-        setups.each { |setup| setup.call }
-        block.call
-        teardowns.each { |teardown| teardown.call }
+      if options[:skip]
+        define_method test_name do
+          skip "not yet implemented"
+        end
+      else
+        define_method test_name do
+          setups.each { |setup| setup.call }
+          block.call
+          teardowns.each { |teardown| teardown.call }
+        end
       end
     end
 
