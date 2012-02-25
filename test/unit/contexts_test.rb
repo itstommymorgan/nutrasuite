@@ -1,6 +1,8 @@
 require 'test_helper'
 
 class ContextsTest < Test::Unit::TestCase
+  binding.pry
+
   it "allows tests outside of any context" do
     assert true
   end

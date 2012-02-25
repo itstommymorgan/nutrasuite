@@ -34,7 +34,7 @@ module Nutrasuite
 
     # Defines a test based on the given context that will be skipped for now
     def it_eventually(name, &block)
-      build_test(name, :skip => true, &block)
+      build_test("eventually #{name}", :skip => true, &block)
     end
 
     def build_test(name, options = {}, &block)
@@ -64,11 +64,17 @@ module Nutrasuite
       puts " * Warning: #{message}"
     end
 
-    include MiniTest::Assertions
+    # ugly, but we need to make sure that all assertions work as intended
+    def method_missing(name, *args, &block)
+      unless MiniTest::Unit::TestCase.current.nil?
+        MiniTest::Unit::TestCase.current.send(name, *args, &block)
+      else
+        super(name, *args, &block)
+      end
+    end
   end
 
   class Context
-    include ContextHelpers
 
     attr_reader :name, :setups, :teardowns
 
@@ -114,6 +120,23 @@ module Nutrasuite
     end
   end
 end
+
+# backwards compatibility with some slightly older versions of minitest
+unless defined? MiniTest::Unit::TestCase.current
+  class MiniTest::Unit::TestCase
+    def initialize name
+      @__name__ = name
+      @__io__ = nil
+      @passed = nil
+      @@current = self
+    end
+
+    def self.current
+      @@current ||= nil
+    end
+  end
+end
+
 
 class MiniTest::Unit::TestCase
   extend Nutrasuite::ContextHelpers
