@@ -86,33 +86,31 @@ module Nutrasuite
 
     def self.build_test_name(name="")
       full_name = "test "
-      @context_stack.each do |context|
+      context_stack.each do |context|
         full_name << context.name << " "
       end
       full_name << name
     end
 
     def self.push(name, &block)
-      @context_stack ||= []
-
       context = Context.new(name, &block)
-      @context_stack.push(context)
+      context_stack.push(context)
 
       context.build
 
-      @context_stack.pop
+      context_stack.pop
     end
 
     def self.context_stack
-      @context_stack
+      @context_stack ||= []
     end
 
     def self.current_context
-      @context_stack.last
+      context_stack.last
     end
 
     def self.current_context?
-      !@context_stack.empty?
+      !context_stack.empty?
     end
   end
 end
