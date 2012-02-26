@@ -53,9 +53,10 @@ module Nutrasuite
         end
       else
         define_method test_name do
-          setups.each { |setup| setup.call }
-          block.call
-          teardowns.each { |teardown| teardown.call }
+          test = MiniTest::Unit::TestCase.current
+          setups.each { |setup| test.instance_eval &setup }
+          test.instance_eval &block
+          teardowns.each { |teardown| test.instance_eval &teardown }
         end
       end
     end
@@ -64,14 +65,6 @@ module Nutrasuite
       puts " * Warning: #{message}"
     end
 
-    # ugly, but we need to make sure that all assertions work as intended
-    def method_missing(name, *args, &block)
-      unless MiniTest::Unit::TestCase.current.nil?
-        MiniTest::Unit::TestCase.current.send(name, *args, &block)
-      else
-        super(name, *args, &block)
-      end
-    end
   end
 
   class Context
