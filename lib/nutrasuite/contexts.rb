@@ -29,8 +29,21 @@ module Nutrasuite
       HERE
     end
 
-    # Public: defines a block of code that should be run before each test in
-    # this context. Very similar to the setup method built-in to MiniTest.
+    # Public: use before to declare steps that need to be run before every test
+    # in a context.
+    def before(&block)
+      if Context.current_context?
+        Context.current_context.setups << block
+      else
+        warn "Not in a context"
+      end
+    end
+
+    # Deprecated: As much as I'd like to use setup and teardown, they screw up
+    # at times with ActiveSupport test cases. Better to use before and after.
+    #
+    # This method will be removed by 0.3.0. Please adjust your tests
+    # accordingly.
     def setup(&block)
       if Context.current_context?
         Context.current_context.setups << block
@@ -39,8 +52,21 @@ module Nutrasuite
       end
     end
 
-    # Public: defines a block of code that should be run after each test in
-    # this context. Very similar to the teardown method built-in to MiniTest.
+    # Public: use after to declare steps that need to be run after every test in
+    # a context.
+    def after(&block)
+      if Context.current_context?
+        Context.current_context.teardowns << block
+      else
+        warn "Not in a context"
+      end
+    end
+
+    # Deprecated: As mich as I'd like to use setup and teardown, they screw up
+    # at times with ActiveSupport test cases. Better to use before and after.
+    #
+    # This method will be removed by 0.3.0. Please adjust your tests
+    # accordingly.
     def teardown(&block)
       if Context.current_context?
         Context.current_context.teardowns << block

@@ -15,11 +15,11 @@ class ContextsTest < Test::Unit::TestCase
   end
 
   a "Context" do
-    setup do
+    before do
       @a = 5
     end
 
-    it "runs setups before tests" do
+    it "runs befores before tests" do
       assert_equal @a, 5
     end
 
@@ -28,30 +28,41 @@ class ContextsTest < Test::Unit::TestCase
     end
 
     that "has a nested Context" do
-      setup do
+      before do
         @b = 10
       end
 
-      it "runs both setups" do
+      it "runs both befores" do
         assert_equal @a, 5
         assert_equal @b, 10
       end
     end
 
-    that "has a nested Context with multiple setups" do
-      setup do
+    that "has a nested Context with multiple befores" do
+      before do
         @b = 6
       end
 
-      setup do
+      before do
         @c = 7
         @b = @b + 1
       end
 
-      it "runs all setups in order" do
+      it "runs all befores in order" do
         assert_equal @b, 7
         assert_equal @b, @c
       end
+    end
+  end
+
+  a "Second context" do
+    before do
+      @b = true
+    end
+
+    it "isn't affected by befores from other contexts" do
+      assert @b
+      assert @a.nil?
     end
   end
 
