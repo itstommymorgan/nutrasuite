@@ -32,7 +32,7 @@ Nutrasuite is all about contexts. Write your tests like so:
     require 'nutrasuite'
     class SomeTest < MiniTest::Unit::TestCase
       a "newly instantiated test object" do
-        setup do
+        before do
           some_setup_stuff
         end
 
@@ -40,14 +40,14 @@ Nutrasuite is all about contexts. Write your tests like so:
           assert true
         end
 
-        teardown do
+        after do
           some_teardown_stuff
         end
       end
     end
 
 All of your other minitest stuff should work normally. Context
-setup/teardown is executed once for each test, so the randomization built into
+before/after blocks are executed once for each test, so the randomization built into
 minitest will still work as you'd expect.
 
 `a`, `an`, `and`, `the`, and `that` all define contexts, so you can build
