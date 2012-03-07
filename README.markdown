@@ -50,9 +50,9 @@ All of your other minitest stuff should work normally. Context
 before/after blocks are executed once for each test, so the randomization built into
 minitest will still work as you'd expect.
 
-`a`, `an`, `and`, `the`, and `that` all define contexts, so you can build
-readable sentences like "_a_ user _that_ has an expired password _and_ a bad email
-address" or "_the_ singleton."
+`a`, `an`, `and_also`, `the`, and `that` all define contexts, so you can build
+readable sentences like "_a_ user _that_ has an expired password _and_also_ a bad
+email address" or "_the_ singleton."
 
 `it` defines tests; `it_eventually` defines tests that are to be skipped.
 

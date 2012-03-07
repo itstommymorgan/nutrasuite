@@ -72,19 +72,19 @@ class ContextsTest < Test::Unit::TestCase
     end
   end
 
-  the "'and' context" do
+  and_also "'and_also' context" do
     it "works" do
       assert true
     end
   end
 
-  the "'an' context" do
+  an "'an' context" do
     it "works" do
       assert true
     end
   end
 
-  the "'that' context" do
+  that "'that' context" do
     it "works" do
       assert true
     end
