@@ -75,8 +75,8 @@ Gem requirements/etc. should be handled by Bundler.
 
 ### Contributors
 
-Alan Johnson (commondream)
-Graham Ashton (gma)
+- Alan Johnson (commondream)
+- Graham Ashton (gma)
 
 ## License
 Copyright (C) 2012 by Tommy Morgan
