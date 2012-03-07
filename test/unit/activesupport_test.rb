@@ -4,8 +4,16 @@ require 'test_helper'
 # especially sure that nutrasuite plays nicely with it (and vice versa).
 class ActivesupportTest < ActiveSupport::TestCase
   
+  before do
+    @root = "test"
+  end
+
   it "allows tests outside of any context" do
     assert true
+  end
+
+  it "runs the before blocks at the root level" do
+    assert_equal "test", @root
   end
 
   it_eventually "allows tests to be skipped outside of any context" do
@@ -23,6 +31,7 @@ class ActivesupportTest < ActiveSupport::TestCase
 
     it "runs befores before tests" do
       assert_equal @a, 5
+      assert_equal @root, "test"
     end
 
     it_eventually "passes its name onto its test" do

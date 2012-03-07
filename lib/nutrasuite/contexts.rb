@@ -202,7 +202,9 @@ module Nutrasuite
     def self.build_test_name(name="")
       full_name = "test "
       context_stack.each do |context|
-        full_name << context.name << " "
+        unless context.name.nil?
+          full_name << context.name << " "
+        end
       end
       full_name << name
     end
@@ -228,7 +230,7 @@ module Nutrasuite
     #
     # Returns: an Array representing the context stack.
     def self.context_stack
-      @context_stack ||= []
+      @context_stack ||= [Context.new(nil)]
     end
 
     # Internal: get the current context.
