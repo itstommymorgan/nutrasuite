@@ -23,7 +23,7 @@ module Nutrasuite
     ["a", "an", "and_also", "that", "the"].each do |article|
       eval <<-HERE
         def #{article}(name, &block)
-          name = "#{article} " << name
+          name = "#{article.gsub("_"," ")} " << name
           Context.push(name, &block)
         end
       HERE
