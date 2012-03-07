@@ -32,47 +32,13 @@ module Nutrasuite
     # Public: use before to declare steps that need to be run before every test
     # in a context.
     def before(&block)
-      if Context.current_context?
-        Context.current_context.setups << block
-      else
-        warn "Not in a context"
-      end
-    end
-
-    # Deprecated: As much as I'd like to use setup and teardown, they screw up
-    # at times with ActiveSupport test cases. Better to use before and after.
-    #
-    # This method will be removed by 0.3.0. Please adjust your tests
-    # accordingly.
-    def setup(&block)
-      if Context.current_context?
-        Context.current_context.setups << block
-      else
-        warn "Not in a context"
-      end
+      Context.current_context.setups << block
     end
 
     # Public: use after to declare steps that need to be run after every test in
     # a context.
     def after(&block)
-      if Context.current_context?
-        Context.current_context.teardowns << block
-      else
-        warn "Not in a context"
-      end
-    end
-
-    # Deprecated: As mich as I'd like to use setup and teardown, they screw up
-    # at times with ActiveSupport test cases. Better to use before and after.
-    #
-    # This method will be removed by 0.3.0. Please adjust your tests
-    # accordingly.
-    def teardown(&block)
-      if Context.current_context?
-        Context.current_context.teardowns << block
-      else
-        warn "Not in a context"
-      end
+      Context.current_context.teardowns << block
     end
 
     # Public: defines a test to be executed. Will run any setup blocks on the
@@ -142,14 +108,6 @@ module Nutrasuite
         end
       end
     end
-
-    # Internal: warn simply outputs a warning message for the user if they
-    # appear to be using Nutrasuite incorrectly.
-    # 
-    def warn(message)
-      puts " * Warning: #{message}"
-    end
-
   end
 
   # Internal: The Context class represents each context that can go on the
@@ -239,14 +197,6 @@ module Nutrasuite
     # are no contexts in the stack at the moment.
     def self.current_context
       context_stack.last
-    end
-
-    # Internal: determine whether there is currently a context active.
-    #
-    # Returns: true if there is at least one context on the stack, false
-    # otherwise.
-    def self.current_context?
-      !context_stack.empty?
     end
   end
 end
