@@ -20,7 +20,7 @@ module Nutrasuite
     #     ...tests...
     #   end
     #
-    ["a", "an", "and", "that", "the"].each do |article|
+    ["a", "an", "and_also", "that", "the"].each do |article|
       eval <<-HERE
         def #{article}(name, &block)
           name = "#{article} " << name
