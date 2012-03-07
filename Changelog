@@ -1,7 +1,7 @@
 0.3.0 [03/07/2012]
   Change log started. Better late than never.
-	Removed deprecated "setup" and "teardown" methods.
-	Introduced the concept of a root context so "before" and "after" methods can
-	  exist outside of a declared context.
-	Replaced the ill-conceived "and" method with "and_also" courtesy @gma.
+  Removed deprecated "setup" and "teardown" methods.
+  Introduced the concept of a root context so "before" and "after" methods can
+    exist outside of a declared context.
+  Replaced the ill-conceived "and" method with "and_also" courtesy @gma.
 
