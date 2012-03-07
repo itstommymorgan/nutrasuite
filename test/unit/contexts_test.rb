@@ -72,19 +72,20 @@ class ContextsTest < Test::Unit::TestCase
     end
   end
 
+  # Note that this isn't calling and as that's a syntax error
   the "'and' context" do
+    it_eventually "works" do
+      assert true
+    end
+  end
+
+  an "'an' context" do
     it "works" do
       assert true
     end
   end
 
-  the "'an' context" do
-    it "works" do
-      assert true
-    end
-  end
-
-  the "'that' context" do
+  that "'that' context" do
     it "works" do
       assert true
     end
