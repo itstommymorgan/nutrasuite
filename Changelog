@@ -1,7 +1,9 @@
+0.3.1 [03/18/2012]
+  Root contexts were kind of a dumb idea it turns out. Found an alternate way to
+    implement similar functionality.
 0.3.0 [03/07/2012]
   Change log started. Better late than never.
   Removed deprecated "setup" and "teardown" methods.
   Introduced the concept of a root context so "before" and "after" methods can
     exist outside of a declared context.
   Replaced the ill-conceived "and" method with "and_also" courtesy @gma.
-

@@ -3,7 +3,6 @@ module Nutrasuite
   # Public: ContextHelpers contains all of the Nutrasuite Context methods. This
   # will be included in Test::Unit::TestCase by default.
   module ContextHelpers
-
     # Public: These methods will each define a context and push it onto the
     # context stack for the duration of the passed in block.
     #
@@ -32,7 +31,12 @@ module Nutrasuite
     # Public: use before to declare steps that need to be run before every test
     # in a context.
     def before(&block)
-      Context.current_context.setups << block
+      if Context.current_context
+        Context.current_context.setups << block
+      else
+        puts self.name + " is adding a hook"
+        self.add_setup_hook(nil, &block)
+      end
     end
 
     # Public: use after to declare steps that need to be run after every test in
@@ -89,6 +93,11 @@ module Nutrasuite
       test_name = Context.build_test_name(name)
 
       setups = []
+      # Be sure to include setup hooks from minitest.
+      unless @setup_hooks.nil?
+        setups = setups + @setup_hooks
+      end
+
       teardowns = []
       Context.context_stack.each do |context|
         setups.concat(context.setups)
@@ -188,7 +197,7 @@ module Nutrasuite
     #
     # Returns: an Array representing the context stack.
     def self.context_stack
-      @context_stack ||= [Context.new(nil)]
+      @context_stack ||= []
     end
 
     # Internal: get the current context.

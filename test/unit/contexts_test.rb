@@ -98,3 +98,11 @@ class ContextsTest < Test::Unit::TestCase
     end
   end
 end
+
+class SecondTest < Test::Unit::TestCase
+  a "Second test class" do
+    it "isn't affected by befores from the first class" do
+      assert_equal nil, @root
+    end
+  end
+end
