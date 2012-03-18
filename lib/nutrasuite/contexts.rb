@@ -34,7 +34,6 @@ module Nutrasuite
       if Context.current_context
         Context.current_context.setups << block
       else
-        puts self.name + " is adding a hook"
         self.add_setup_hook(nil, &block)
       end
     end
